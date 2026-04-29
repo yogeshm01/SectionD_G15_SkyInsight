@@ -92,7 +92,7 @@ Airlines operate in a highly competitive industry where customer satisfaction di
 
 | Item | Details |
 |---|---|
-| Dashboard URL | _Add link_ |
+| Dashboard URL | [Link](https://public.tableau.com/app/profile/bhavya.punj2072/viz/AirlineAnalysisDashboard1/CustomerExperienceOverview?publish=yes) |
 | Executive View | KPI summary |
 | Operational View | Service vs rating analysis |
 | Filters | Airline, Seat Type, Traveller Type |
