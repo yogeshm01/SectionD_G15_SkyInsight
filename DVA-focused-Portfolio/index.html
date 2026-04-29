@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio DVA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div>
+        <h1 class="site-title">Aditi Singh</h1>
+        <p class="site-copy">Data Analyst portfolio showcasing Tableau dashboards, analytics work, and data storytelling projects.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#projects">View Projects</a>
+        <a class="btn-secondary" href="#contact">Contact Me</a>
+      </div>
+    </header>
+
+    <main class="content">
+      <section id="projects" class="main-card">
+        <h2 class="section-heading">📊 Featured Data Projects</h2>
+        <div class="repo-grid">
+          <div class="repo-card">
+            <div class="repo-card-body">
+              <h3 class="repo-title">🎬 Netflix Content Intelligence Dashboard</h3>
+              <p class="repo-desc">Built an interactive Tableau dashboard to analyze Netflix content trends, genres, ratings, and global distribution.</p>
+              <div class="repo-tags">
+                <span class="topic-tag">Tableau</span>
+                <span class="topic-tag">EDA</span>
+                <span class="topic-tag">Dashboard</span>
+              </div>
+              <iframe
+                src="https://public.tableau.com/views/NetflixDashContentIntelligence/Dashboard1?:embed=y&:display_count=yes"
+                width="100%" height="350" loading="lazy" title="Netflix Dashboard"
+              ></iframe>
+              <div style="margin-top: 16px;">
+                <a href="https://public.tableau.com/app/profile/aditi.singh6105/viz/NetflixDashContentIntelligence/Dashboard1?publish=yes" target="_blank" class="btn-primary">🔗 View Full Dashboard</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="repo-card">
+            <div class="repo-card-body">
+              <h3 class="repo-title">Mind Matrics: Mental Health in Tech</h3>
+              <p class="repo-desc">Story-driven DVA project analyzing OSMI Mental Health in Tech survey data using EDA and visual storytelling to uncover workplace mental health trends.</p>
+              <div class="repo-tags">
+                <span class="topic-tag">Tableau</span>
+                <span class="topic-tag">Analytics</span>
+                <span class="topic-tag">KPI</span>
+              </div>
+              <iframe
+                src="https://public.tableau.com/views/Book1_17771519970940/Dashboard1?:embed=y&:display_count=yes"
+                width="100%" height="350" loading="lazy" title="Mental Health in Tech Dashboard"
+              ></iframe>
+              <div style="margin-top: 16px;">
+                <a href="https://public.tableau.com/app/profile/aditi.singh6105/viz/Book1_17771519970940/Dashboard1?publish=yes" target="_blank" class="btn-primary">🔗 View Full Dashboard</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-card">
+        <h2 class="section-heading">💡 About Me</h2>
+        <p>I am a Data Analyst passionate about turning raw data into meaningful insights. I specialize in Tableau dashboards, data storytelling, and KPI-driven analysis. My goal is to help businesses make smarter, data-driven decisions.</p>
+      </section>
+
+      <section id="contact" class="main-card">
+        <h2 class="section-heading">⚙️ Skills</h2>
+        <div class="skills-badges">
+          <span class="badge">Tableau</span>
+          <span class="badge">Python</span>
+          <span class="badge">SQL</span>
+          <span class="badge">Excel</span>
+          <span class="badge">Data Visualization</span>
+          <span class="badge">EDA</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Run locally with <code>./serve.sh</code> from the repository root and visit <strong>http://localhost:8000</strong></p>
+    </footer>
+  </div>
+</body>
+</html>
