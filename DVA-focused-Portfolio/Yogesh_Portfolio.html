@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yogesh Mishra | Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #f8fafc;
+      --bg-card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #7c3aed;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --glass-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(37, 99, 235, 0.05), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.05), transparent 25%);
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 8%;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+    }
+
+    nav h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      cursor: pointer;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Sections */
+    section {
+      padding: 7rem 8% 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 4px;
+      bottom: -10px;
+      left: 20%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 10rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      border-radius: 50px;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      font-size: 4.5rem;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* Skills */
+    .skills-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .skill-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .skill-category h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .skill-tag {
+      padding: 0.6rem 1.2rem;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-tag:hover {
+      background: rgba(37, 99, 235, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      color: var(--primary);
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .project-tools {
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .project-card ul {
+      margin-left: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .project-card li {
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+
+    /* Timeline (Education & Achievements) */
+    .timeline-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20px;
+      height: 100%;
+      width: 2px;
+      background: var(--border-color);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 3.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--bg-light);
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+      z-index: 1;
+    }
+
+    .timeline-item.achievement::before {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+    }
+
+    .timeline-date {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .timeline-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+      color: var(--text-main);
+    }
+
+    .timeline-content h4 {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    /* Contact */
+    .contact-container {
+      text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .contact-container::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .contact-info {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-email {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email:hover {
+      color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 8%;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      margin-top: 4rem;
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--text-main);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero h2 {
+        font-size: 3.5rem;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 2.8rem;
+      }
+
+      section {
+        padding: 5rem 5% 3rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .contact-email {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <h1 onclick="window.scrollTo(0,0)">Yogesh.</h1>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="hero-badge">Available for Work</div>
+    <h2>Hi, I'm Yogesh Mishra <br><span class="gradient-text">Data Analyst</span></h2>
+    <p>
+      I transform complex data into actionable insights using SQL, Python, and Tableau. With a strong foundation in
+      software development and data visualization, I build end-to-end analytics solutions that drive business decisions.
+    </p>
+    <div class="btn-group">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Contact Me</a>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2 class="section-title">Technical Expertise</h2>
+    <div class="skills-wrapper">
+
+      <div class="skill-category">
+        <h3>Languages & Databases</h3>
+        <div class="skills-grid">
+          <div class="skill-tag">Python</div>
+          <div class="skill-tag">SQL</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>Libraries & Frameworks</h3>
+        <div class="skills-grid">
+          <div class="skill-tag">Pandas</div>
+          <div class="skill-tag">NumPy</div>
+          <div class="skill-tag">Matplotlib</div>
+          <div class="skill-tag">Seaborn</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>Tools & Platforms</h3>
+        <div class="skills-grid">
+          <div class="skill-tag">Tableau</div>
+          <div class="skill-tag">Excel</div>
+          <div class="skill-tag">Google Sheets</div>
+          <div class="skill-tag">Jupyter</div>
+          <div class="skill-tag">Google Colab</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>Core Competencies</h3>
+        <div class="skills-grid">
+          <div class="skill-tag">Statistics</div>
+          <div class="skill-tag">Data Cleaning</div>
+          <div class="skill-tag">Exploratory Data Analysis (EDA)</div>
+          <div class="skill-tag">Dashboarding</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <h3>Aviation Wildlife Strike Risk Analysis</h3>
+        <div class="project-tools">Python • Google Sheets</div>
+        <ul>
+          <li>Built a data analytics capstone on aviation safety using wildlife strike data (9,999 records) with Google
+            Sheets; performed data cleaning, feature engineering, KPI design, and created an interactive dashboard to
+            identify high-risk damage patterns.</li>
+          <li>Conducted EDA focusing on flight phases, engine ingestion, seasonality, weather conditions, and airport
+            hotspots to uncover key drivers of aircraft damage and operational risk.</li>
+          <li>Developed dashboard views covering damage by flight phase, monthly/annual trends, engine ingestion impact,
+            and environmental risk factors, delivering actionable recommendations.</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <h3>Airline Passenger Satisfaction Analytics</h3>
+        <div class="project-tools">Tableau • Python (Pandas, NumPy, Seaborn)</div>
+        <ul>
+          <li>Built an end-to-end data analytics project on airline passenger satisfaction using 23K+ reviews;
+            identified key drivers of dissatisfaction and delivered data-backed improvement strategies.</li>
+          <li>Developed a complete ETL pipeline and performed EDA, correlation analysis, and segmentation to uncover
+            insights across service factors and customer segments.</li>
+          <li>Designed KPI-driven Tableau dashboards highlighting service performance, customer recommendation behavior,
+            and segment-wise insights for improving customer experience.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Education & Achievements Section -->
+  <section id="education">
+    <h2 class="section-title">Journey</h2>
+    <div class="timeline-container">
+
+      <div class="timeline-item achievement">
+        <span class="timeline-date">2025</span>
+        <div class="timeline-content">
+          <h3>Smart India Hackathon Winner</h3>
+          <h4>National Level Competition</h4>
+          <p>Recognized for innovative problem-solving and technical execution.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item achievement">
+        <span class="timeline-date">Current</span>
+        <div class="timeline-content">
+          <h3>Knight at LeetCode</h3>
+          <h4>Competitive Programming</h4>
+          <p>Achieved a Max Rating of 1917, demonstrating strong algorithmic and problem-solving skills.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">2024 - 2028</span>
+        <div class="timeline-content">
+          <h3>Bachelor of Technology (Artificial Intelligence)</h3>
+          <h4>Newton School of Technology, Rishihood University</h4>
+          <p>Current CGPA: 8/10</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">2023 - 2024</span>
+        <div class="timeline-content">
+          <h3>Intermediate (Class XII)</h3>
+          <h4>Kendriya Vidyalaya Gomtinagar, Lucknow</h4>
+          <p>Grade: 85%</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">2021 - 2022</span>
+        <div class="timeline-content">
+          <h3>Matriculation (Class X)</h3>
+          <h4>Kendriya Vidyalaya Sitapur</h4>
+          <p>Grade: 91%</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-container">
+      <p class="contact-info">Currently based in Lucknow and looking for new opportunities.</p>
+      <a href="mailto:yogesh.mishra2024@gmail.com" class="contact-email">yogesh.mishra2024@gmail.com</a>
+      <p class="contact-info">Phone: +91 9415575799</p>
+      <div class="btn-group" style="justify-content: center; margin-top: 2rem;">
+        <a href="https://linkedin.com/in/yogeshm01" target="_blank" class="btn btn-primary">LinkedIn Profile</a>
+        <a href="https://github.com/yogeshm01" target="_blank" class="btn btn-outline">GitHub Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-text">
+      © 2026 Yogesh Mishra. All rights reserved.
+    </div>
+    <div class="social-links">
+      <a href="#">Portfolio</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
+      <a href="#">Kaggle</a>
+    </div>
+  </footer>
+
+</body>
+
+</html>
