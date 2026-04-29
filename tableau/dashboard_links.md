@@ -1,17 +1,4 @@
-# Tableau Dashboard Links
+# Tableau Dashboard Link
 
-Use this file to store the final public links for your Tableau deliverables.
+Tableau Public Dashboard: https://public.tableau.com/app/profile/bhavya.punj2072/viz/AirlineAnalysisDashboard1/CustomerExperienceOverview?publish=yes
 
-## Dashboard Details
-
-| Item | Link | Notes |
-|---|---|---|
-| Tableau Public Dashboard | _Paste URL here_ | _Main submission link_ |
-| Workbook / Story Link | _Paste URL here if applicable_ | _Optional_ |
-| Demo Recording | _Paste URL here if applicable_ | _Optional_ |
-
-## Screenshot Checklist
-
-- Add exported dashboard screenshots to `tableau/screenshots/`
-- Use clear file names such as `executive_view.png` and `regional_drilldown.png`
-- Make sure screenshots match the final public dashboard
