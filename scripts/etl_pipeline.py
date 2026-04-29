@@ -1,78 +1,202 @@
-"""Starter ETL pipeline for NST DVA Capstone 2.
+"""
+etl_pipeline.py
+===============
+Airline Reviews Analytics — ETL Pipeline
+Newton School of Technology | Capstone 2
 
-This script is intentionally lightweight. Teams should adapt it to their own dataset,
-but it provides a clean starting point for loading a raw CSV, standardizing columns,
-and exporting a processed file for notebook and Tableau use.
+Usage:
+    python scripts/etl_pipeline.py
+
+Output:
+    data/processed/cleaned_airline_reviews.csv
+    data/processed/final_airline_reviews.csv
 """
 
-from __future__ import annotations
-
-import argparse
-from pathlib import Path
-
+import os
+import sys
+import logging
 import pandas as pd
+import numpy as np
+
+# ---------------------------------------------------------------------------
+# Logging Configuration
+# ---------------------------------------------------------------------------
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s  [%(levelname)s]  %(message)s"
+)
+log = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+RAW_FILE = os.path.join(BASE_DIR, "data", "raw", "airline_reviews.csv")
+CLEANED_FILE = os.path.join(BASE_DIR, "data", "processed", "cleaned_airline_reviews.csv")
+FINAL_FILE = os.path.join(BASE_DIR, "data", "processed", "final_airline_reviews.csv")
+
+# ===========================================================================
+# STEP 1 — EXTRACT
+# ===========================================================================
+def extract(filepath):
+    log.info("=== STEP 1: EXTRACT ===")
+
+    if not os.path.exists(filepath):
+        log.error(f"File not found: {filepath}")
+        sys.exit(1)
+
+    df = pd.read_csv(filepath)
+
+    log.info(f"Shape: {df.shape}")
+    log.info(f"Columns: {list(df.columns)}")
+    log.info(f"Missing Values:\n{df.isnull().sum()}")
+
+    return df
 
 
-def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """Convert column names to a clean snake_case format."""
-    cleaned = (
-        df.columns.str.strip()
-        .str.lower()
-        .str.replace(r"[^a-z0-9]+", "_", regex=True)
-        .str.strip("_")
-    )
-    result = df.copy()
-    result.columns = cleaned
-    return result
+# ===========================================================================
+# STEP 2 — TRANSFORM / CLEAN
+# ===========================================================================
+def transform(df):
+    log.info("=== STEP 2: CLEANING ===")
+
+    # ----------------------------
+    # 2.1 Drop useless column
+    # ----------------------------
+    if 'Unnamed: 0' in df.columns:
+        df = df.drop(columns=['Unnamed: 0'])
+
+    # ----------------------------
+    # 2.2 Standardize columns
+    # ----------------------------
+    df.columns = df.columns.str.lower().str.strip().str.replace(" ", "_")
+
+    # ----------------------------
+    # 2.3 Handle missing values
+    # ----------------------------
+
+    # Drop high-missing columns
+    drop_cols = ['wifi_&_connectivity', 'aircraft']
+    df = df.drop(columns=[c for c in drop_cols if c in df.columns], errors='ignore')
+
+    # Fill categorical
+    cat_cols = ['type_of_traveller', 'seat_type', 'route']
+    for col in cat_cols:
+        if col in df.columns:
+            df[col].fillna('Unknown', inplace=True)
+
+    # Fill numerical ratings
+    rating_cols = [
+        'seat_comfort', 'cabin_staff_service',
+        'food_&_beverages', 'ground_service',
+        'inflight_entertainment', 'value_for_money'
+    ]
+
+    for col in rating_cols:
+        if col in df.columns:
+            df[col].fillna(df[col].median(), inplace=True)
+
+    # ----------------------------
+    # 2.4 Data types
+    # ----------------------------
+    df['overall_rating'] = pd.to_numeric(df['overall_rating'], errors='coerce')
+
+    if 'review_date' in df.columns:
+        df['review_date'] = pd.to_datetime(df['review_date'], errors='coerce')
+
+    if 'date_flown' in df.columns:
+        df['date_flown'] = pd.to_datetime(df['date_flown'], errors='coerce')
+
+    # ----------------------------
+    # 2.5 Feature engineering
+    # ----------------------------
+    df['recommended'] = df['recommended'].astype(str).str.lower().str.strip()
+
+    df['is_recommended'] = df['recommended'].map({
+        'yes': 1,
+        'no': 0
+    })
+
+    # ----------------------------
+    # 2.6 Drop missing target
+    # ----------------------------
+    df = df.dropna(subset=['overall_rating'])
+
+    log.info(f"Cleaned shape: {df.shape}")
+
+    return df
 
 
-def basic_clean(df: pd.DataFrame) -> pd.DataFrame:
-    """Apply a few safe default cleaning steps."""
-    result = normalize_columns(df)
-    result = result.drop_duplicates().reset_index(drop=True)
+# ===========================================================================
+# STEP 3 — DERIVED FEATURES (TABLEAU READY)
+# ===========================================================================
+def create_final_dataset(df):
+    log.info("=== STEP 3: FINAL DATA PREP ===")
 
-    for column in result.select_dtypes(include="object").columns:
-        result[column] = result[column].astype("string").str.strip()
+    # Rating category
+    def rating_category(x):
+        if x <= 3:
+            return 'Low'
+        elif x <= 6:
+            return 'Medium'
+        else:
+            return 'High'
 
-    return result
+    df['rating_category'] = df['overall_rating'].apply(rating_category)
 
+    # Final columns (OPTIMIZED DATASET)
+    final_df = df[[
+        'airline_name',
+        'overall_rating',
+        'review_date',
+        'seat_type',
+        'type_of_traveller',
+        'is_recommended',
+        'verified',
+        'seat_comfort',
+        'cabin_staff_service',
+        'food_&_beverages',
+        'ground_service',
+        'inflight_entertainment',
+        'value_for_money',
+        'rating_category'
+    ]]
 
-def build_clean_dataset(input_path: Path) -> pd.DataFrame:
-    """Read a raw CSV file and return a cleaned dataframe."""
-    df = pd.read_csv(input_path)
-    return basic_clean(df)
-
-
-def save_processed(df: pd.DataFrame, output_path: Path) -> None:
-    """Write the cleaned dataframe to disk, creating the parent folder if needed."""
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(output_path, index=False)
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the Capstone 2 starter ETL pipeline.")
-    parser.add_argument(
-        "--input",
-        required=True,
-        type=Path,
-        help="Path to the raw CSV file in data/raw/.",
-    )
-    parser.add_argument(
-        "--output",
-        required=True,
-        type=Path,
-        help="Path to the cleaned CSV file in data/processed/.",
-    )
-    return parser.parse_args()
+    return final_df
 
 
-def main() -> None:
-    args = parse_args()
-    cleaned_df = build_clean_dataset(args.input)
-    save_processed(cleaned_df, args.output)
-    print(f"Processed dataset saved to: {args.output}")
-    print(f"Rows: {len(cleaned_df)} | Columns: {len(cleaned_df.columns)}")
+# ===========================================================================
+# STEP 4 — LOAD
+# ===========================================================================
+def load(df, final_df):
+    log.info("=== STEP 4: LOAD ===")
+
+    os.makedirs(os.path.dirname(CLEANED_FILE), exist_ok=True)
+
+    df.to_csv(CLEANED_FILE, index=False)
+    final_df.to_csv(FINAL_FILE, index=False)
+
+    log.info(f"Saved cleaned dataset → {CLEANED_FILE}")
+    log.info(f"Saved final dataset → {FINAL_FILE}")
 
 
+# ===========================================================================
+# PIPELINE RUNNER
+# ===========================================================================
+def run_pipeline():
+    log.info("🚀 Starting Airline ETL Pipeline")
+
+    df = extract(RAW_FILE)
+    df = transform(df)
+    final_df = create_final_dataset(df)
+    load(df, final_df)
+
+    log.info("✅ Pipeline completed successfully")
+
+
+# ===========================================================================
+# ENTRY POINT
+# ===========================================================================
 if __name__ == "__main__":
-    main()
+    run_pipeline()
